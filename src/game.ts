@@ -57,6 +57,7 @@ class UIUpdate
 engine.addSystem(new UIUpdate())
 
 var upNextImg = new Texture("images/upnext.png")
+var talkToSanta = new Texture("images/talk-to-santa.png")
 var scoreImg = new Texture("images/score.png")
 var instructions = new Texture("images/instructions.png")
 var presentBlue = new Texture("images/presentBlue.png")
@@ -77,6 +78,16 @@ upnext.height = 256
 upnext.positionX = 30
 upnext.positionY = -100
 
+const toTalkSantaImg = new UIImage(rect, talkToSanta)
+toTalkSantaImg.hAlign = 'left'
+toTalkSantaImg.vAlign = 'bottom'
+toTalkSantaImg.sourceWidth = 512
+toTalkSantaImg.sourceHeight = 512
+toTalkSantaImg.width = 256
+toTalkSantaImg.height = 256
+toTalkSantaImg.positionX = 500
+toTalkSantaImg.positionY = 400
+
 const instructionsImg = new UIImage(rect, instructions)
 instructionsImg.hAlign = 'left'
 instructionsImg.vAlign = 'bottom'
@@ -84,8 +95,8 @@ instructionsImg.sourceWidth = 512
 instructionsImg.sourceHeight = 512
 instructionsImg.width = 512
 instructionsImg.height = 512
-instructionsImg.positionX = 325
-instructionsImg.positionY = 150
+instructionsImg.positionX = 360
+instructionsImg.positionY = 135
 instructionsImg.visible = false
 
 const countdown3Img = new UIImage(rect, countdown3)
@@ -315,7 +326,7 @@ class SleighRide
       log("LET THE RIDE BEGIN!")
       sleighRideAnim.play()
       sleighRideAnim.speed = 0.9
-      santaNPC.talk(Dialogue1, 7)
+      santaNPC.talk(Dialogue1, 7, 5)
 
       npcTALK.addComponentOrReplace(new AudioSource(new AudioClip('audio/Santa_7.mp3'))) // 'Hang on tight now!'
       npcTALK.getComponent(AudioSource).playOnce()  
@@ -339,25 +350,25 @@ class SleighRide
       this.tickSinceRideStart += 1
       this.secondsSinceRideStart += dt
 
-      if (this.secondsSinceRideStart > 5 && sleighPhase == 0)
+      if (this.secondsSinceRideStart > 4 && sleighPhase == 0)
       {
         sleighPhase = 1 
         sleighRideAnim.speed = 1.1
       }
 
-      if (this.secondsSinceRideStart > 7 && this.exactPhase == 0)
+      if (this.secondsSinceRideStart > 6 && this.exactPhase == 0)
       {
         // Show instructions UI
         instructionsImg.visible = true
         this.exactPhase = 1
       }
 
-      if (this.secondsSinceRideStart > 14 && this.exactPhase == 1)
+      if (this.secondsSinceRideStart > 15 && this.exactPhase == 1)
       {
         this.exactPhase = 2
         instructionsImg.visible = false
 
-        santaNPC.talk(Dialogue1, 8, 5)
+        santaNPC.talk(Dialogue1, 8, 4.5)
 
         npcTALK.addComponentOrReplace(new AudioSource(new AudioClip('audio/Santa_8.mp3'))) // 'Go, throw the presents into the chimneys'
         npcTALK.getComponent(AudioSource).playOnce() 
@@ -446,57 +457,57 @@ class SleighRide
       {
 
         this.exactPhase = 10
-        grinchNPC.talk(Dialogue2, 0, 8)
+        grinchNPC.talk(Dialogue2, 0, 7.5)
 
         npcTALK.getComponent(Transform).position = Camera.instance.position
         npcTALK.addComponentOrReplace(new AudioSource(new AudioClip('audio/Grinch_1.mp3'))) // 'Ohh what do we have here? Trying to give out presents again this year?'
         npcTALK.getComponent(AudioSource).playOnce()  
       }
 
-      if (this.secondsSincePhase3 > 14 && sleighPhase == 3 && this.exactPhase == 10)
+      if (this.secondsSincePhase3 > 13.5 && sleighPhase == 3 && this.exactPhase == 10)
       {
         this.exactPhase = 11
-        grinchNPC.talk(Dialogue2, 1, 6)
+        grinchNPC.talk(Dialogue2, 1, 5.5)
 
         npcTALK.getComponent(Transform).position = Camera.instance.position
         npcTALK.addComponentOrReplace(new AudioSource(new AudioClip('audio/Grinch_2.mp3'))) // 'What is with this joyful atmosphere? It hurts my ears!'
         npcTALK.getComponent(AudioSource).playOnce()  
       }
 
-      if (this.secondsSincePhase3 > 21 && sleighPhase == 3 && this.exactPhase == 11)
+      if (this.secondsSincePhase3 > 20.5 && sleighPhase == 3 && this.exactPhase == 11)
       {
         this.exactPhase = 12
-        santaNPC.talk(Dialogue1, 12, 4)
+        santaNPC.talk(Dialogue1, 12, 3.5)
 
         npcTALK.getComponent(Transform).position = Camera.instance.position
         npcTALK.addComponentOrReplace(new AudioSource(new AudioClip('audio/Santa_12.mp3'))) // 'How poetic!'
         npcTALK.getComponent(AudioSource).playOnce()  
       }
 
-      if (this.secondsSincePhase3 > 26 && sleighPhase == 3 && this.exactPhase == 12)
+      if (this.secondsSincePhase3 > 25.5 && sleighPhase == 3 && this.exactPhase == 12)
       {
         this.exactPhase = 13
-        grinchNPC.talk(Dialogue2, 2, 9)
+        grinchNPC.talk(Dialogue2, 2, 8.5)
 
         npcTALK.getComponent(Transform).position = Camera.instance.position
         npcTALK.addComponentOrReplace(new AudioSource(new AudioClip('audio/Grinch_3.mp3'))) // 'Oh shut it Santa! Christmas is mine! Just what can you do about it?'
         npcTALK.getComponent(AudioSource).playOnce()  
       }
 
-      if (this.secondsSincePhase3 > 35 && sleighPhase == 3 && this.exactPhase == 13)
+      if (this.secondsSincePhase3 > 34.5 && sleighPhase == 3 && this.exactPhase == 13)
       {
         this.exactPhase = 14
-        grinchNPC.talk(Dialogue2, 6, 15)
+        grinchNPC.talk(Dialogue2, 6, 14)
 
         npcTALK.getComponent(Transform).position = Camera.instance.position
         npcTALK.addComponentOrReplace(new AudioSource(new AudioClip('audio/Grinch_4_3.mp3'))) // 'You! .. You shall not pass! ... No! No no no! ...'
         npcTALK.getComponent(AudioSource).playOnce()  
       }
  
-      if (this.secondsSincePhase3 > 51 && sleighPhase == 3 && this.exactPhase == 14)
+      if (this.secondsSincePhase3 > 50 && sleighPhase == 3 && this.exactPhase == 14)
       {
         this.exactPhase = 15
-        grinchNPC.talk(Dialogue2, 7, 11)
+        grinchNPC.talk(Dialogue2, 7, 9)
 
         npcTALK.getComponent(Transform).position = Camera.instance.position
         npcTALK.addComponentOrReplace(new AudioSource(new AudioClip('audio/Grinch_5.mp3'))) // 'My trusty crows will see to it. Mhuahaha!'
@@ -515,14 +526,14 @@ class SleighRide
 
       }
 
-      if (this.secondsSincePhase3 > 59 && sleighPhase == 3 && this.exactPhase == 15)
+      if (this.secondsSincePhase3 > 58 && sleighPhase == 3 && this.exactPhase == 15)
       {
         SHOOTING_ALLOWED = true 
 
         this.exactPhase = 16
         sleighPhase = 4
 
-        santaNPC.talk(Dialogue1, 11, 7)
+        santaNPC.talk(Dialogue1, 11, 6)
 
         npcTALK.addComponentOrReplace(new AudioSource(new AudioClip('audio/Santa_11.mp3'))) // 'We've prepared some special presents for them. Knock 'em down!'
         npcTALK.getComponent(AudioSource).playOnce()  
@@ -537,7 +548,7 @@ class SleighRide
         npcTALK.addComponentOrReplace(new AudioSource(new AudioClip('audio/Grinch_6.mp3'))) // 'But how?! Alright alright you win this time. This.. this is NOT over.'
         npcTALK.getComponent(AudioSource).playOnce()  
 
-        sleighRideAnim.speed = 1.0 // speed up sleigh animation again
+        sleighRideAnim.speed = 1.1 // speed up sleigh animation again
         SHOOTING_ALLOWED = false
 
       }
@@ -547,7 +558,7 @@ class SleighRide
         this.secondsSinceWin += dt
       }
 
-      if (this.exactPhase == 17 && this.secondsSinceWin > 10)
+      if (this.exactPhase == 17 && this.secondsSinceWin > 9)
       {
         this.exactPhase = 18
 
@@ -556,13 +567,13 @@ class SleighRide
         audioEnt.addComponent(audioSource2)
         audioSource2.playing = true
         audioSource2.loop = true
-        audioSource2.volume = 0.50
+        audioSource2.volume = 0.40
         audioSource2.pitch = 1
 
       }
 
 
-      if (this.exactPhase == 18 && this.secondsSinceWin > 15.5)
+      if (this.exactPhase == 18 && this.secondsSinceWin > 14)
       {
         this.exactPhase = 19
 
@@ -572,7 +583,7 @@ class SleighRide
         engine.removeEntity(santaNPC) // Remove old Santa
 
         santaNPC2 = new NPC(
-          { position: new Vector3(22, -3, 27), scale: new Vector3(0.25, 0.25, 0.25), rotation: new Quaternion(0,0,0,1)}, 
+          { position: new Vector3(22, 0, 27), scale: new Vector3(0.25, 0.25, 0.25), rotation: new Quaternion(0,0,0,1)}, 
           'models/Santa.glb', 
           
           () => {
@@ -791,6 +802,7 @@ engine.addSystem(new SpawnChimneys())
   
 	() => {
     santaNPC.talk(Dialogue1, 0)
+    toTalkSantaImg.visible = false
   },
   {
     darkUI: true,
@@ -973,10 +985,10 @@ export class AutoPlayUnityAudio implements ISystem {
     update(dt: number) {
       this.tick += 1
       
-      if (this.tick % 64 == 0) // Once per 64 updates
-      {
-        log("Player position: " + this.mainCamera.position)
-      }
+      // if (this.tick % 64 == 0) // Once per 64 updates
+      // {
+      //   log("Player position: " + this.mainCamera.position)
+      // }
 
       // Spawn new snow per 4 ticks (up to 125)
       if (this.tick % 4 == 0 && this.totalSnowCount <= 125)
@@ -1643,7 +1655,7 @@ class presentShootSystem {
           var dist4 = distanceVector(transform.position, RavenLocations[3])
           var dist5 = distanceVector(transform.position, RavenLocations[4])
         
-          if (dist1 < 2 && !RAVEN_DEAD[0])
+          if (dist1 < 3 && !RAVEN_DEAD[0])
           {
             RAVEN_DEAD[0] = true
             engine.removeEntity(entity)
@@ -1651,7 +1663,7 @@ class presentShootSystem {
             scoreAmount += 200
             scoreVal.value = String(scoreAmount)
             crowSound.getComponent(AudioSource).playOnce()
-          } else if (dist2 < 2 && !RAVEN_DEAD[1])
+          } else if (dist2 < 3 && !RAVEN_DEAD[1])
           {
             RAVEN_DEAD[1] = true
             engine.removeEntity(entity)
@@ -1659,7 +1671,7 @@ class presentShootSystem {
             scoreAmount += 200    
             scoreVal.value = String(scoreAmount)   
             crowSound.getComponent(AudioSource).playOnce()   
-          } else if (dist3 < 2 && !RAVEN_DEAD[2])
+          } else if (dist3 < 3 && !RAVEN_DEAD[2])
           {
             RAVEN_DEAD[2] = true
             engine.removeEntity(entity)
@@ -1667,7 +1679,7 @@ class presentShootSystem {
             scoreAmount += 200      
             scoreVal.value = String(scoreAmount)   
             crowSound.getComponent(AudioSource).playOnce() 
-          } else if (dist4 < 2 && !RAVEN_DEAD[3])
+          } else if (dist4 < 3 && !RAVEN_DEAD[3])
           {
             RAVEN_DEAD[3] = true
             engine.removeEntity(entity)
@@ -1675,7 +1687,7 @@ class presentShootSystem {
             scoreAmount += 200          
             scoreVal.value = String(scoreAmount)
             crowSound.getComponent(AudioSource).playOnce()
-          } else if (dist5 < 2 && !RAVEN_DEAD[4])
+          } else if (dist5 < 3 && !RAVEN_DEAD[4])
           {
             RAVEN_DEAD[4] = true
             engine.removeEntity(entity)
@@ -1834,7 +1846,7 @@ input.subscribe("BUTTON_DOWN", ActionButton.POINTER, false, (e) => {
   }
   catch (Error)   
   {  
-    log("[ERROR] You can't shoot a present yet. There is a cooldown between shooting presents.");  
+    //log("[ERROR] You can't shoot a present yet. There is a cooldown between shooting presents.");  
   }  
 })
 
